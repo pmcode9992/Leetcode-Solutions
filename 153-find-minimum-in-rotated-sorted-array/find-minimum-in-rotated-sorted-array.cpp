@@ -7,10 +7,8 @@ public:
         int m;
         while(l<=h){
             m = (h-l)/2 + l;
-            cout<<l<< " "<<m<< " "<<h<<endl;
             if(nums[h] < nums[m]){
                 l = m + 1 ;
-
             }
             else{
                 if(m==0 || nums[m-1] > nums[m]){
