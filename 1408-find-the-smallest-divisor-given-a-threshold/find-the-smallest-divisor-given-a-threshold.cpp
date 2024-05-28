@@ -13,7 +13,6 @@ public:
             for(int i =0;i<n;i++){
                 s+=ceil((double)nums[i]/(double)m);
             }
-            cout<<m<< " - "<<s<<endl;
             if(s > threshold){
                 //check right
                 l = m + 1;
