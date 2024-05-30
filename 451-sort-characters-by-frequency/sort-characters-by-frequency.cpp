@@ -1,27 +1,31 @@
-
 class Solution {
 public:
     string frequencySort(string s) {
-        unordered_map<char,int> mp;
-        multimap<int,char> r;
-        string ss="";
+        map<char, int> mpp;
+        string soln= "";
+        
+        for(char i : s){
+            mpp[i]++;
+        }
 
-        for(auto a : s)
-            mp[a]++;
+        vector<pair<char, int>> l(mpp.begin(), mpp.end());
 
-        for(auto a : mp)
-            r.insert({a.second, a.first});
+        sort(l.begin(), l.end(), comparator);
 
-        for(auto it = r.rbegin(); it != r.rend(); ++it)
-            ss += string(it->first, it->second);
+        
+        for(auto it  = l.begin();it!=l.end() ;it++){
+            while(it->second > 0 ){
+                soln+=it->first;
+                it->second--;
+            }
+        }
 
-        //for(auto it = r.rbegin(); it != r.rend(); ++it){
-        //   for (int i = 0; i < it->first; ++i) {
-        //          ss += it->second;
-        //        }
-        //} 
 
-        return ss;
+        return soln;
+
+    }
+
+    bool static comparator(pair<char ,int> &a, pair<char, int> &b){
+        return a.second>b.second;
     }
 };
-
