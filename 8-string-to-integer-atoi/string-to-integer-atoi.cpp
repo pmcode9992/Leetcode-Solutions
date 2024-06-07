@@ -1,72 +1,49 @@
 class Solution {
 public:
     int myAtoi(string s) {
-        int start = 0;
-        int end = 0;
-        bool negative = false;
-
-        // remove whitespaces
-        while (start < s.length() && s[start] != '-' && s[start] != '+' &&
-               (s[start] < '0' || s[start] > '9')) {
-            if (s[start] != ' ') {
-                return 0;
-            }
-            start++;
-        }
-        // set negative
-        if (start < s.length() && s[start] == '-') {
-            negative = true;
-            start++;
-        }
-        if (start < s.length() && s[start] == '+' && negative != true) {
-            negative = false;
-            start++;
-        }
-
-        // remove leading 0s
-        while (s[start] == '0') {
-            start++;
-        }
-
-        // set start and end
-        end = start;
-        // cout<<end;
-        while (end < s.length() && (s[end] >= '0' && s[end] <= '9')) {
-            end++;
-        }
-
-        if (start == end) {
+        if(s.size() < 1){
             return 0;
         }
-        string soln = s.substr(start, end - start);
-        cout << soln;
-
-        if (negative == true) {
-            try {
-                return -1 * stoi(soln);
-            } catch (exception e){
-                return INT_MIN;
-            }
-        } else {
-            try {
-                return stoi(soln);
-            } catch (exception e){
-                return INT_MAX;
-            }
+        if(s[0] == ' '){
+            return myAtoi(s.substr(1, s.size() -1));
         }
-        // if (soln.length() >= 10 && negative == false) {
-        //     try {
-        //         return stoi(soln);
-        //     } catch (exception e) {
-        //         return INT_MAX;
-        //     }
-        // }
-        // if (soln.length() >= 10 && negative == true) {
-        //     return (INT_MIN);
-        // }
-        // if (negative) {
-        //     return -(stoi(soln));
-        // }
-        return stoi(soln);
+        if((s[0] < '0' || s[0] > '9') && s[0]!='-' && s[0]!='+'){
+            return 0;
+        }
+        else if(s[0] == '-' || s[0] == '+' ){
+            try{
+                return stoi(s);
+            }
+            catch(out_of_range e){
+                return s[0] == '-'? INT_MIN : INT_MAX;
+            }
+            catch(exception e){
+                //cout<<e<<endl;
+                return 0;
+            }
+            
+        }
+        else{
+            int end = s.size();
+            for(int i =0; i< s.size();i++){
+                if(s[i] >= '0' && s[i] <='9'){
+                    i++;
+                }
+                else{
+                    cout<<"nigga";
+                    end = i;
+                    break;
+                }
+            }
+            try{
+                return stoi(s.substr(0, end));
+            }
+            catch(out_of_range e){
+                return s[0] == '-'? INT_MIN : INT_MAX;
+            }
+            //return stoi(s.substr(0, end));
+        }
+        return 0;
+
     }
 };
