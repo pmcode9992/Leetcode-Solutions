@@ -10,7 +10,17 @@ public:
         if((s[0] < '0' || s[0] > '9') && s[0]!='-' && s[0]!='+'){
             return 0;
         }
-        else if(s[0] == '-' || s[0] == '+' ){
+        else{
+            int end = s.size();
+            for(int i =1; i< s.size();i++){
+                if(s[i] >= '0' && s[i] <='9'){
+                    i++;
+                }
+                else{
+                    end = i;
+                    break;
+                }
+            }
             try{
                 return stoi(s);
             }
@@ -20,28 +30,7 @@ public:
             catch(exception e){
                 //cout<<e<<endl;
                 return 0;
-            }
-            
-        }
-        else{
-            int end = s.size();
-            for(int i =0; i< s.size();i++){
-                if(s[i] >= '0' && s[i] <='9'){
-                    i++;
-                }
-                else{
-                    cout<<"nigga";
-                    end = i;
-                    break;
-                }
-            }
-            try{
-                return stoi(s.substr(0, end));
-            }
-            catch(out_of_range e){
-                return s[0] == '-'? INT_MIN : INT_MAX;
-            }
-            //return stoi(s.substr(0, end));
+            } stoi(s.substr(0, end));
         }
         return 0;
 
