@@ -20,7 +20,6 @@ public:
         while(!st.empty()){
             st.pop();
         }
-
         //right min
         for(int i =n -1;i>=0;i--){
             while(!st.empty() && arr[st.top()] >= arr[i]){
@@ -30,18 +29,9 @@ public:
             st.push(i);
         }
 
-        for(int i =0 ;i< n;i++){
-            cout<<left[i]<<" ";
-        }
-        cout<<endl;
-        for(int i =0 ;i< n;i++){
-            cout<<right[i]<<" ";
-        }
-        cout<<endl;
-
         for(int i =0;i< n;i++){
             sum += static_cast<ll>(i - left[i]) * (right[i] - i) * arr[i] % MOD;
-            sum %= MOD;
+            sum%=MOD;
         }
         return sum;
         
