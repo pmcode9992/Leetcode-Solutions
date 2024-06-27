@@ -6,20 +6,15 @@ public:
         for(int i : nums){
             pq.push(i);
         }
-        while(pq.size()>k){
-            pq.pop();
-        }
         this->k = k;
 
     }
     
     int add(int val) {
-        if(pq.empty() || pq.size()<k){
-            pq.push(val);
-            return pq.top();
-        }
         pq.push(val);
-        pq.pop();
+        while (pq.size() > k) {
+            pq.pop();
+        }
         return pq.top();
     }
 };
