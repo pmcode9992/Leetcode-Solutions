@@ -1,20 +1,25 @@
 class Solution {
-public: 
-int f(int n,int prev,vector<int>&nums,vector<vector<int>>&dp) 
-{
-    if(n==nums.size()) 
-    return 0;  
-    if(dp[n][prev+1]!=-1) 
-    return dp[n][prev+1];
-    int len=f(n+1,prev,nums,dp); 
-    int len1=0;
-    if(prev==-1 || nums[n]>nums[prev]) 
-    len1=1+f(n+1,n,nums,dp); 
-    return dp[n][prev+1]=max(len,len1);
-}
-    int lengthOfLIS(vector<int>& nums) { 
-        int n=nums.size();
-        vector<vector<int>>dp(n,vector<int>(n+1,-1)); 
-        return f(0,-1,nums,dp);
+public:
+
+    int solveOptimal(vector<int>& nums){
+        if(nums.size()==0){
+            return 0;
+        }
+        vector<int>ans;
+        ans.push_back(nums[0]);
+        for(int j=1;j<nums.size();j++){
+            if(nums[j]>ans.back()){
+                ans.push_back(nums[j]);
+            }
+            else{
+                int index=lower_bound(ans.begin(),ans.end(),nums[j])-ans.begin();
+                ans[index]=nums[j];
+            }
+        }
+        return ans.size();
+    }
+
+    int lengthOfLIS(vector<int>&nums) {
+        return solveOptimal(nums);
     }
 };
