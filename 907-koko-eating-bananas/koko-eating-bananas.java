@@ -1,8 +1,5 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        if(piles.length == 1){
-            return piles[0]/h + (piles[0] % h == 0 ? 0 : 1);
-        }
         Arrays.sort(piles);
         int l = 1;
         int r = piles[piles.length - 1];
