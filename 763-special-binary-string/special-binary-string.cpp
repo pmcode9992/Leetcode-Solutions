@@ -1,25 +1,24 @@
 class Solution {
- public:
-  string makeLargestSpecial(string S) {
-    vector<string> specials;
-    int count = 0;
+public:
+    string makeLargestSpecial(string s) {
+        int n=s.size();
+        int cnt=0,start=0;
+        vector<string> ans;
+        for(int i=0;i<n;i++){
+            if(s[i]=='1') cnt++;
+            else cnt--;
 
-    for (int i = 0, j = 0; j < S.length(); ++j) {
-      count += S[j] == '1' ? 1 : -1;
-      if (count == 0) {
-        const string& inner = S.substr(i + 1, j - i - 1);
-        specials.push_back('1' + makeLargestSpecial(inner) + '0');
-        i = j + 1;
-      }
+            if(cnt==0){
+               string temp='1'+makeLargestSpecial(s.substr(start+1,i-start-1))+'0';
+               ans.push_back(temp);
+               start=i+1;
+            }
+        }
+
+        sort(ans.begin(),ans.end());
+        reverse(ans.begin(),ans.end());
+        string res="";
+        for(auto it:ans) res+=it;
+        return res;
     }
-    sort(begin(specials), end(specials), greater<>());
-    return join(specials);
-  }
- private:
-  string join(const vector<string>& specials) {
-    string joined;
-    for (const string& special : specials)
-      joined += special;
-    return joined;
-  }
 };
