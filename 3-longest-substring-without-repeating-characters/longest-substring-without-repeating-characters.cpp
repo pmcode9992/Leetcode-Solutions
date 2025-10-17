@@ -1,31 +1,20 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        if (s.length() == 1) {
-            return 1;
-        }
-        map<char, int> mpp;
-        int start = 0;
-        int end = 0;
-        int maxi = 0;
-        while(end<s.length()){
-            if(!mpp[s[end]]){
-                mpp[s[end]] = end + 1;   
+        vector<int>mp(256, -1);
+        int l = 0;
+        int r = 0;
+        int len = 0;
+        int n = s.length();
+        while(r < n){
+            if(mp[s[r]] != -1){
+                l = max(mp[s[r]] + 1, l);   // move the left pointer ahead if duplicates are found
             }
-            else{
-                cout<<start<<" "<<end<<endl;
-                maxi = maxi > (end - start) ? maxi : (end - start);
-                int lim = mpp[s[end]];
-                while(start<lim){
-                    mpp[s[start]] = 0;
-                    start++;
-                }
-                mpp[s[end]] = end + 1;
-            }
-            end++;
-        }
-        maxi = maxi > (end - start) ? maxi : (end - start);
+            mp[s[r]] = r;
 
-        return maxi;
+            len = max(len, r - l + 1);
+            r++;
+        }
+        return len;
     }
 };
