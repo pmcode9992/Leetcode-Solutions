@@ -27,13 +27,6 @@ public:
             nse[st.top()] = heights.size() - st.top();
             st.pop();
         }
-        for(int i = 0;i< heights.size();i++){
-            cout<<nse[i]<<" ";
-        }
-        cout<<endl<<endl;
-        for(int i = 0;i< heights.size();i++){
-            cout<<nsel[i]<<" ";
-        }
         for(int i = 0 ; i< heights.size() ; i++){
             area = max((heights[i] * (nse[i] + nsel[i])), area);
         }
