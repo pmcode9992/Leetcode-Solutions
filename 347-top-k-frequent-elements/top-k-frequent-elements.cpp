@@ -1,25 +1,22 @@
 class Solution {
 public:
-    class myComp {
-    public:
-        bool operator()(pair<int, int>& a, pair<int, int>& b) {
-            return a.second > b.second;
-        }
-    };
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        map<int, int> mpp;
-        for (int i : nums) {
-            mpp[i]++;
+        vector<pair<int, int>> heap;
+        unordered_map<int, int> mpp;
+        vector<int> res;
+        for(int i = 0 ;i< nums.size();i++){
+            mpp[nums[i]]++;
         }
-        vector<pair<int, int>> f;
-        for (auto it = mpp.begin(); it != mpp.end(); it++) {
-            f.push_back({it->first, it->second});
+        for(auto i : mpp){
+            heap.push_back({i.second, i.first});
         }
-        sort(f.begin(), f.end(), myComp());
-        vector<int> soln;
-        for (int i = 0; i < k; i++) {
-            soln.push_back(f[i].first);
+        make_heap(heap.begin(), heap.end());
+        for(int i = 0;i< k;i++){
+            res.push_back(heap.front().second);
+            pop_heap(heap.begin(), heap.end());
+            heap.pop_back();
         }
-        return soln;
+
+        return res;
     }
 };
