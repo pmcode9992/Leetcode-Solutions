@@ -1,44 +1,33 @@
 class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
-        int neg = -1;
-        int pos = -1;
-        // set neg and pos
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (nums[i] > 0 && pos == -1) {
-                pos = i;
+        int a = 0, b = 0;
+        bool sign = 1;
+        vector<int> res(nums.size());
+        // init
+        while(nums[a] < 0){
+            a++;
+        }
+        while(nums[b] > 0){
+            b++;
+        }
+        //traverse & append
+        for(int i = 0 ; i < nums.size() ; i++){
+            if(sign){
+                res[i] = nums[a++];
+                sign = !sign;
             }
-            if (nums[i] < 0 && neg == -1) {
-                neg = i;
+            else{
+                res[i] = nums[b++];
+                sign = !sign;
             }
-            if (pos != -1 && neg != -1) {
-                break;
+            while(a < nums.size() && nums[a] < 0){
+                a++;
+            }
+            while(b < nums.size() && nums[b] > 0){
+                b++;
             }
         }
-        vector<int> soln;
-        while (pos < n && neg < n) {
-            if (pos < n) {
-                soln.push_back(nums[pos]);
-                pos++;
-            }
-            if (neg < n) {
-                soln.push_back(nums[neg]);
-                neg++;
-            }
-
-            //reset pos and neg
-            for(neg;neg<n;neg++){
-                if(nums[neg]<0){
-                    break;
-                }
-            }
-            for(pos;pos<n;pos++){
-                if(nums[pos]>0){
-                    break;
-                }
-            }
-        }
-        return soln;
+        return res;
     }
 };
