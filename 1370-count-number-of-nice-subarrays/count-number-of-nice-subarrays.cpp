@@ -1,22 +1,22 @@
 class Solution {
 public:
-    int cnt(vector<int> nums, int k){
-        int right = 0;
-        int left = 0;
-        int count = 0;
-        int sum = 0;
-        while(right<nums.size()){
-            sum += (nums[right] % 2);
-            while(sum > k && left<=right){
-                sum -= (nums[left] % 2);
-                left++;
-            }
-            count += right - left + 1;
-            right++;
-        }
-        return count;
-    }
     int numberOfSubarrays(vector<int>& nums, int k) {
-        return cnt(nums, k) - cnt(nums, k-1);
+        int s = 0, e = 0, res = 0, cnt = 0, temp = 0;
+        while(e < nums.size()){
+            if(nums[e] & 1){
+                cnt++;
+                temp = 0;
+            }
+            while(cnt == k){
+                temp++;
+                if(nums[s] & 1){
+                    cnt --;
+                }
+                s++;
+            }
+            res += temp;
+            e++;
+        }
+        return res;
     }
 };
