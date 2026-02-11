@@ -1,26 +1,27 @@
 class Solution {
 public:
-    bool checkPali(vector<char>& s, int l , int r){
-        if(l>=r){
+    bool isValid(char ch){
+        if(ch >= 'A' && ch <= 'Z' || ch - 32 >= 'A' && ch - 32 <= 'Z' || ch >= '0' && ch <='9'){
             return true;
-        } 
-        if(s[l]== s[r]){
-            l++;
-            r--;
-            return checkPali(s,l,r);
         }
-        else{
-            return false;
-        }
-
+        return false;
     }
     bool isPalindrome(string s) {
-        vector<char> format;
-        for( char ch : s){
-            if(isalnum(ch)){
-                format.push_back(tolower(ch));
+        int start = 0, end = s.size() - 1;
+        while(start < end){
+            while(!isValid(s[start]) && start < end){
+                start++;
             }
+            while(!isValid(s[end]) && end > start){
+                end--;
+            }
+            if(s[start] >= 'a' && s[start] <= 'z'){s[start] -= 32;}
+            if(s[end] >= 'a' && s[end] <= 'z'){s[end] -= 32;}
+            if(s[start]!= s[end]){
+                return false;
+            }
+            start++; end--;
         }
-        return checkPali(format,0,format.size() -1);
+        return true;
     }
 };
