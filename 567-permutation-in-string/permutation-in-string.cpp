@@ -1,20 +1,21 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        vector<int> mpp1 (26, 0);
-        for(int i = 0 ; i < s1.size() ; i++){
-            mpp1[s1[i] - 'a']++;
+        unordered_map<char, int> ms1, cpyms1;
+        int ns1 = s1.size(), ns2 = s2.size();
+        bool f = true;
+        for(char i : s1){
+            ms1[i]++;
         }
-        int n = s2.size(), m = s1.size();
-        for(int i = 0 ; i < n - m + 1 ; i++){
-            bool f = true;
-            vector<int> mpp2 = mpp1;
-            for(int j = i ; j < i + m ; j++){
-                mpp2[s2[j] - 'a']--;
 
+        for(int i = 0 ; i <= ns2 - ns1 ; i++ ){
+            cpyms1 = ms1;
+            f = true;
+            for(int j = i ; j < i + ns1 ;j++){
+                cpyms1[s2[j]]--;
             }
-            for(int k = 0 ; k < 26;k++){
-                if(mpp2[k] > 0){
+            for(auto it : cpyms1){
+                if(it.second > 0){
                     f = false;
                     break;
                 }
@@ -24,8 +25,6 @@ public:
             }
         }
         return false;
-
-
         
     }
 };
