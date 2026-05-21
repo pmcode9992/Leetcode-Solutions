@@ -1,35 +1,37 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        stack<int> st, stl;
-        vector<int> nse(heights.size(), -1);
-        vector<int> nsel(heights.size(), -1);
-        int area = 0;
-        for(int i = 0 ; i < heights.size() ; i++){
+        int  n = heights.size(), res = 0;
+        vector<int> nse(n, 0), rnse(n, 0);
+        stack<int> st;
+        for(int i = 0 ; i < n ; i++ ){
             while(!st.empty() && heights[st.top()] > heights[i]){
                 nse[st.top()] = i - st.top();
                 st.pop();
             }
             st.push(i);
         }
-        for(int i = heights.size() - 1; i >= 0 ; i--){
-            while(!stl.empty() && heights[stl.top()] > heights[i]){
-                nsel[stl.top()] = stl.top() - i - 1;
-                stl.pop();
-            }
-            stl.push(i);
-        }
-        while(!stl.empty()){
-            nsel[stl.top()] = stl.top();
-            stl.pop();
-        }
         while(!st.empty()){
-            nse[st.top()] = heights.size() - st.top();
+            nse[st.top()] = n - st.top();
             st.pop();
         }
-        for(int i = 0 ; i< heights.size() ; i++){
-            area = max((heights[i] * (nse[i] + nsel[i])), area);
+        for(int i = n - 1 ;i >= 0 ; i--){
+            while(!st.empty() && heights[st.top()] > heights[i]){
+                rnse[st.top()] = st.top() - i;
+                st.pop();
+            }
+            st.push(i);
         }
-        return area;
+        while(!st.empty()){
+            rnse[st.top()] = st.top() + 1;
+            st.pop();
+        }
+
+        for(int i = 0 ; i < n ; i++){
+            res = max(res, (nse[i] + rnse[i] - 1) * heights[i]);
+        }
+        return res;
+
+        
     }
 };
